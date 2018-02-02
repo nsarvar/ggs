@@ -9,5 +9,16 @@ return [
         'cache' => [
             'class' => 'yii\caching\FileCache',
         ],
+        'urlManager' => [
+            'enablePrettyUrl' => true,
+            'showScriptName' => false,
+            'rules' => [
+                ['class' => 'yii\rest\UrlRule', 'controller' => 'pay'],
+                "<controller>/<action>/<id:\w+>" => '<controller>/<action>',
+                "<controller>/<action>/<id:\w+>/<cat:\w+>" => '<controller>/<action>',
+                "<controller>/<action>/<id:\w+>/<lang:\w+>" => '<controller>/<action>',
+                "<controller>/<action>/<id:\w+>/<id2:\w+>" => '<controller>/<action>'
+            ]
+        ],
     ],
 ];

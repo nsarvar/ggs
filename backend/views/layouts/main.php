@@ -9,7 +9,7 @@ use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use common\widgets\Alert;
-
+raoul2000\bootswatch\BootswatchAsset::$theme = 'flatly';
 AppAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
