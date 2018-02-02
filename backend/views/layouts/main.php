@@ -27,6 +27,7 @@ AppAsset::register($this);
 <?php $this->beginBody() ?>
 
 <div class="wrap">
+    <h1>Salom</h1>
     <?php
     NavBar::begin([
         'brandLabel' => Yii::$app->name,
@@ -62,6 +63,41 @@ AppAsset::register($this);
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
         ]) ?>
         <?= Alert::widget() ?>
+        <?= \dmstr\widgets\Menu::widget([
+            'options' => ['class' => 'sidebar-menu tree', 'data-widget'=> 'tree'],
+            'items' => [
+                ['label' => 'Menu Yii2', 'options' => ['class' => 'header']],
+                ['label' => 'Gii2222', 'icon' => 'file-code-o', 'url' => ['/gii']],
+                ['label' => 'Debug', 'icon' => 'dashboard', 'url' => ['/debug']],
+                ['label' => 'Login', 'url' => ['site/login'], 'visible' => Yii::$app->user->isGuest],
+                [
+                    'label' => 'Some tools',
+                    'icon' => 'share',
+                    'url' => '#',
+                    'items' => [
+                        ['label' => 'Gii22', 'icon' => 'file-code-o', 'url' => ['/gii'],],
+                        ['label' => 'Debug', 'icon' => 'dashboard', 'url' => ['/debug'],],
+                        [
+                            'label' => 'Level One',
+                            'icon' => 'circle-o',
+                            'url' => '#',
+                            'items' => [
+                                ['label' => 'Level Two', 'icon' => 'circle-o', 'url' => '#',],
+                                [
+                                    'label' => 'Level Two',
+                                    'icon' => 'circle-o',
+                                    'url' => '#',
+                                    'items' => [
+                                        ['label' => 'Level Three', 'icon' => 'circle-o', 'url' => '#',],
+                                        ['label' => 'Level Three', 'icon' => 'circle-o', 'url' => '#',],
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ]) ?>
         <?= $content ?>
     </div>
 </div>

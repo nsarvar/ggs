@@ -20,5 +20,13 @@ return [
                 "<controller>/<action>/<id:\w+>/<id2:\w+>" => '<controller>/<action>'
             ]
         ],
+        'i18n' => [
+            'translations' => [
+                '*' => [
+                    'class' => 'yii\i18n\PhpMessageSource',
+                    'basePath' => '@common/messages',
+                ],
+            ],
+        ],
     ],
 ];
