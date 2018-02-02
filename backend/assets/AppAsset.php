@@ -12,15 +12,15 @@ class AppAsset extends AssetBundle
     public $basePath = '@webroot';
     public $baseUrl = '@web';
     public $css = [
-        'datatables/dataTables.bootstrap.css',
+        'css/dataTables.bootstrap.css',
         'css/site.css',
     ];
     public $js = [
-        'datatables/dataTables.bootstrap.min.js',
+        'js/jquery.dataTables.js',
+        'js/dataTables.bootstrap.js',
     ];
     public $depends = [
         'yii\web\YiiAsset',
-        'raoul2000\bootswatch\BootswatchAsset',
         'dmstr\web\AdminLteAsset',
     ];
 }
