@@ -5,12 +5,12 @@ namespace common\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\AuthAssignment;
+use common\models\AuthItem;
 
 /**
- * AuthAssignmentSearch represents the model behind the search form of `common\models\AuthAssignment`.
+ * AuthItemSearch represents the model behind the search form of `common\models\AuthItem`.
  */
-class AuthAssignmentSearch extends AuthAssignment
+class AuthItemSearch extends AuthItem
 {
     /**
      * @inheritdoc
@@ -18,8 +18,8 @@ class AuthAssignmentSearch extends AuthAssignment
     public function rules()
     {
         return [
-            [['item_name'], 'safe'],
-            [['user_id', 'created_at'], 'integer'],
+            [['name', 'description', 'rule_name', 'data'], 'safe'],
+            [['type', 'created_at', 'updated_at'], 'integer'],
         ];
     }
 
@@ -41,7 +41,7 @@ class AuthAssignmentSearch extends AuthAssignment
      */
     public function search($params)
     {
-        $query = AuthAssignment::find();
+        $query = AuthItem::find();
 
         // add conditions that should always apply here
 
@@ -59,11 +59,15 @@ class AuthAssignmentSearch extends AuthAssignment
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'user_id' => $this->user_id,
+            'type' => $this->type,
             'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
         ]);
 
-        $query->andFilterWhere(['like', 'item_name', $this->item_name]);
+        $query->andFilterWhere(['like', 'name', $this->name])
+            ->andFilterWhere(['like', 'description', $this->description])
+            ->andFilterWhere(['like', 'rule_name', $this->rule_name])
+            ->andFilterWhere(['like', 'data', $this->data]);
 
         return $dataProvider;
     }

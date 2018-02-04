@@ -21,9 +21,9 @@ class Controller extends \yii\web\Controller
             return $this->goHome();
     }
 
-    public function dump($text) {
+    public function dump($obj) {
         echo '<pre>';
-        print_r($text);
+        print_r($obj);
         echo '</pre>';
         exit;
     }
