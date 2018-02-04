@@ -30,36 +30,20 @@
             [
                 'options' => ['class' => 'sidebar-menu tree', 'data-widget'=> 'tree'],
                 'items' => [
-                    ['label' => 'Menu Yii2', 'options' => ['class' => 'header']],
-                    ['label' => 'Gii', 'icon' => 'file-code-o', 'url' => ['/gii']],
-                    ['label' => 'Debug', 'icon' => 'dashboard', 'url' => ['/debug']],
-                    ['label' => 'Login', 'url' => ['site/login'], 'visible' => Yii::$app->user->isGuest],
-                    [
-                        'label' => 'Some tools',
-                        'icon' => 'share',
-                        'url' => '#',
-                        'items' => [
-                            ['label' => 'Gii', 'icon' => 'file-code-o', 'url' => ['/gii'],],
-                            ['label' => 'Debug', 'icon' => 'dashboard', 'url' => ['/debug'],],
-                            [
-                                'label' => 'Level One',
-                                'icon' => 'circle-o',
-                                'url' => '#',
-                                'items' => [
-                                    ['label' => 'Level Two', 'icon' => 'circle-o', 'url' => '#',],
-                                    [
-                                        'label' => 'Level Two',
-                                        'icon' => 'circle-o',
-                                        'url' => '#',
-                                        'items' => [
-                                            ['label' => 'Level Three', 'icon' => 'circle-o', 'url' => '#',],
-                                            ['label' => 'Level Three', 'icon' => 'circle-o', 'url' => '#',],
-                                        ],
-                                    ],
-                                ],
-                            ],
-                        ],
-                    ],
+//                    ['label' => 'Menu Yii2', 'options' => ['class' => 'header']],
+                    ['label' => 'Dashboard', 'icon' => 'home', 'url' => ['/gii']],
+                    ['label' => 'Students', 'icon' => 'users', 'url' => ['/debug']],
+                    ['label' => 'Teachers', 'icon' => 'user-secret', 'url' => ['/debug']],
+                    ['label' => 'Finance', 'icon' => 'money', 'url' => ['/debug']],
+                    ['label' => 'Courses', 'icon' => 'list-alt', 'url' => ['/debug']],
+                    ['label' => 'Time table', 'icon' => 'clock-o', 'url' => ['/debug']],
+                    ['label' => 'Announcements', 'icon' => 'file', 'url' => ['/debug']],
+                    ['label' => 'Auth manager', 'icon' => 'lock', 'url' => '#', 'items' => [
+                        ['label' => 'Auth Assignment', 'icon' => 'file', 'url' => ['/auth-assignment/index']],
+                        ['label' => 'Auth Role', 'icon' => 'file', 'url' => ['/auth-role/index']],
+                        ['label' => 'Auth Item', 'icon' => 'file', 'url' => ['/auth-item/index']],
+                        ['label' => 'Auth Rule', 'icon' => 'file', 'url' => ['/auth-rule/index']],
+                    ]],
                 ],
             ]
         ) ?>
