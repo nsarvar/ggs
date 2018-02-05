@@ -55,4 +55,8 @@ class SignupForm extends Model
         
         return $user->save() ? $user : null;
     }
+
+    public static function generateRandomPassword() {
+        return 'admin12345';
+    }
 }

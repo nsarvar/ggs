@@ -2,12 +2,14 @@
 
 namespace backend\controllers;
 
+use frontend\models\SignupForm;
 use Yii;
 use common\models\Student;
 use common\models\StudentSearch;
 use backend\components\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\User;
 
 /**
  * StudentController implements the CRUD actions for Student model.
@@ -107,6 +109,29 @@ class StudentController extends Controller
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
+    }
+
+    public function actionCreateStudent() {
+        $session = Yii::$app->session;
+        if(!$session->has('create-student')) {
+//            $session->set('create-student',1);
+            return $this->render('create-student');
+        } else {
+
+        }
+        return $this->referrer();
+    }
+
+    public function actionSaveUser() {
+        if($post = Yii::$app->request->post()) {
+            $model = new Student();
+            $user = new \common\models\User();
+            $user->load($post);
+            $user->password = SignupForm::generateRandomPassword();
+            $user->save();
+
+
+        }
     }
 
     /**
