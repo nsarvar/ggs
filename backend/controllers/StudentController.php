@@ -2,6 +2,8 @@
 
 namespace backend\controllers;
 
+use common\components\TimeTable;
+use common\models\Subject;
 use frontend\models\SignupForm;
 use Yii;
 use common\models\Student;
@@ -130,10 +132,34 @@ class StudentController extends Controller
             $user->password = SignupForm::generateRandomPassword();
             $user->save();
 
-
+            $model->load($post);
+            if(empty($model->errors)) {
+                Yii::$app->session->set('new-student',['user_id' => $user->id,'fname' => $model->fname, 'lname' => $model->lname, 'passport' => $model->passport]);
+                Yii::$app->session->set('step-1',1);
+                return $this->render('create_student_2', ['model' => $model]);
+            }
+            Yii::$app->session->setFlash('errors', $user->errors);
         }
+        return $this->referrer();
     }
 
+    public function actionCreateStudent2() {
+        $model = new Student();
+        if(Yii::$app->session->get('step-1') == 1 || 1) {
+            return $this->render('create_student_2',['model' => $model]);
+        }
+        return $this->redirect(['create-student']);
+    }
+
+    public function actionCreateStudent3() {
+        $models = Subject::getModelsAsArray();
+        return $this->render('create_student_3',['models' => $models]);
+    }
+
+    public function actionCreateStudent4() {
+        $time = new TimeTable();
+        return $this->render('create_student_4',['weekdays' => $time->getWeekDays(), 'hours' => $time->getHours()]);
+    }
     /**
      * Finds the Student model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.

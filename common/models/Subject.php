@@ -51,4 +51,9 @@ class Subject extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Course::className(), ['subject_id' => 'id']);
     }
+
+    public static function getModelsAsArray() {
+        $models = Subject::find()->asArray()->all();
+        return $models;
+    }
 }

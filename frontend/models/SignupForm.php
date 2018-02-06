@@ -1,6 +1,7 @@
 <?php
 namespace frontend\models;
 
+use Yii;
 use yii\base\Model;
 use common\models\User;
 
@@ -58,5 +59,12 @@ class SignupForm extends Model
 
     public static function generateRandomPassword() {
         return 'admin12345';
+    }
+
+    public function attributeLabels()
+    {
+        return [
+            'username' => Yii::t('main','Username'),
+        ];
     }
 }

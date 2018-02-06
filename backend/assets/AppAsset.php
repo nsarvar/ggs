@@ -14,6 +14,7 @@ class AppAsset extends AssetBundle
     public $css = [
         'css/dataTables.bootstrap.css',
         'css/site.css',
+        'css/custom.css',
     ];
     public $js = [
         'js/jquery.dataTables.js',

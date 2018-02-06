@@ -46,6 +46,7 @@ class Student extends \yii\db\ActiveRecord
             [['parent_id'], 'integer'],
             [['code', 'fname', 'lname'], 'string', 'max' => 50],
             [['email'], 'string', 'max' => 100],
+            ['email','email'],
             [['passport', 'phone'], 'string', 'max' => 20],
             [['parent_id'], 'exist', 'skipOnError' => true, 'targetClass' => Parent::className(), 'targetAttribute' => ['parent_id' => 'id']],
         ];

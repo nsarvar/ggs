@@ -2,9 +2,13 @@
 /**
  * Created by PhpStorm.
  * User: Davron
- * Date: 2018/02/05
- * Time: 22:13
+ * Date: 2018/02/06
+ * Time: 21:45
  */
+
+/* @var $model common\models\Student */
+
+use kartik\date\DatePicker;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -13,13 +17,12 @@ use yii\widgets\ActiveForm;
 <div class="tab-form">
     <?php $form = ActiveForm::begin() ?>
 
-    <?= $form->field($user, 'username')->textInput() ?>
-
-    <?= $form->field($model,'fname')->textInput()?>
-
-    <?= $form->field($model, 'lname')->textInput() ?>
-
-    <?= $form->field($model, 'passport')->textInput() ?>
+    <?php foreach ($models as $model) {
+        echo Html::checkbox('subject'.$model['id'], false, ['label' => $model['name']]);
+        echo '<br>';
+        ?>
+    <?php } ?>
+    <br>
 
     <div class="form-group">
         <?= Html::submitButton(Yii::t('main', 'Save'), ['class' => 'btn btn-success']) ?>
