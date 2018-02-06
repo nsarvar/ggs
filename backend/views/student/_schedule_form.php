@@ -5,6 +5,7 @@
  * Date: 2018/02/06
  * Time: 23:52
  */
+use kartik\checkbox\CheckboxX;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -23,9 +24,21 @@ use yii\widgets\ActiveForm;
             <div id="tab-<?=$key?>" class="tab-pane<?=$first ? ' active' : ''?>">
                 <h3><?=Yii::t('main','{weekday} kungi bo\'sh vaqtlar.',['weekday' => $weekday] )?></h3>
                 <?php foreach ($hours  as $key2 => $hour) {
-                  echo Html::checkbox('time['.$key.']['.$key2.']',false, ['label' => $hour]);
-                  echo '<br>';
-                } ?>
+                    $name = 'time-'.$key.'-'.$key2;
+                    ?>
+                    <div class="form-group has-success">
+                        <label class="cbx-label" for="<?=$name?>">
+                            <?php
+                            echo CheckboxX::widget([
+                                'name' => $name,
+                                'options' => ['id' => $name],
+                                'pluginOptions'=>['threeState'=>false]
+                            ]);
+                            echo $hour;
+                            ?>
+                        </label>
+                    </div>
+                <?php } ?>
             </div>
         <?php $first = false; } ?>
     </div>

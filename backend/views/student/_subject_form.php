@@ -8,6 +8,7 @@
 
 /* @var $model common\models\Student */
 
+use kartik\checkbox\CheckboxX;
 use kartik\date\DatePicker;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
@@ -18,9 +19,21 @@ use yii\widgets\ActiveForm;
     <?php $form = ActiveForm::begin() ?>
 
     <?php foreach ($models as $model) {
-        echo Html::checkbox('subject'.$model['id'], false, ['label' => $model['name']]);
-        echo '<br>';
+        $name = 'subject'.$model['id'];
         ?>
+    <div class="form-group has-success">
+        <label class="cbx-label" for="<?=$name?>">
+            <?php
+            echo CheckboxX::widget([
+                'name' => $name,
+                'options' => ['id' => $name],
+                'pluginOptions'=>['threeState'=>false]
+            ]);
+            echo $model['name'];
+        ?>
+
+        </label>
+    </div>
     <?php } ?>
     <br>
 
