@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "subject".
@@ -55,5 +56,10 @@ class Subject extends \yii\db\ActiveRecord
     public static function getModelsAsArray() {
         $models = Subject::find()->asArray()->all();
         return $models;
+    }
+
+    public static function getModelsAsMap() {
+        $models = Subject::find()->all();
+        return ArrayHelper::map($models,'id','name');
     }
 }

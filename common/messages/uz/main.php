@@ -93,7 +93,7 @@ return [
     'Search' => '',
     'Start Time' => '',
     'Student ID' => '',
-    'Subject ID' => '',
+    'Subject ID' => 'Fan',
     'Subjects' => 'Fanlar',
     'The requested page does not exist.' => '',
     'Title' => '',
@@ -141,5 +141,7 @@ return [
     'Teachers' => 'O\'qituvchilar',
     'Time table' => 'Dars jadvali',
     'User ID' => 'Foydalanuvchi',
-    'This username has already been taken.' => 'Ushbu foydalanuvchi nomi band. Iltimos boshqa foydalanuvchi nomi tanlang.'
+    'This username has already been taken.' => 'Ushbu foydalanuvchi nomi band. Iltimos boshqa foydalanuvchi nomi tanlang.',
+    'Sub Subjects' => 'Fan darajalari',
+    'Create Sub Subject' => 'Fan darajasi yaratish',
 ];

@@ -1,22 +1,23 @@
 <?php
 
+use common\models\Subject;
 use yii\helpers\Html;
 use yii\grid\GridView;
 
 /* @var $this yii\web\View */
-/* @var $searchModel common\models\SubjectSearch */
+/* @var $searchModel common\models\SubSubjectSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('main', 'Subjects');
+$this->title = Yii::t('main', 'Sub Subjects');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="subject-index">
+<div class="sub-subject-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a(Yii::t('main', 'Create Subject'), ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(Yii::t('main', 'Create Sub Subject'), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([
@@ -26,6 +27,13 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'id',
                 'contentOptions'=>['style'=>'width: 30px;']
+            ],
+            [
+                'attribute' => 'subject_id',
+                'filter' => Subject::getModelsAsMap(),
+                'content' => function($data){
+                    return $data->subject->name;
+                }
             ],
             'name',
 
