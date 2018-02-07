@@ -39,7 +39,7 @@ use dmstr\widgets\Alert;
     <div class="pull-right hidden-xs">
         <b>Version</b> 2.0
     </div>
-    <strong>Copyright &copy; 2018 <a href="https://www.facebook.com/sarvar.nishonboyev" target="_blank"> Sarvar Nishonboyev </a>.</strong> All rights
+    <strong>Copyright &copy; 2018 <a href="https://www.facebook.com/" target="_blank"> GGS </a>.</strong> All rights
     reserved.
 </footer>
 
