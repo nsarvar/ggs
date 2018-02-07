@@ -141,4 +141,5 @@ return [
     'Teachers' => 'O\'qituvchilar',
     'Time table' => 'Dars jadvali',
     'User ID' => 'Foydalanuvchi',
+    'This username has already been taken.' => 'Ushbu foydalanuvchi nomi band. Iltimos boshqa foydalanuvchi nomi tanlang.'
 ];

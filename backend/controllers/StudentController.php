@@ -126,19 +126,33 @@ class StudentController extends Controller
 
     public function actionSaveUser() {
         if($post = Yii::$app->request->post()) {
+
+//            $this->dump($post);
+
             $model = new Student();
-            $user = new \common\models\User();
+            $user = new SignupForm();
             $user->load($post);
             $user->password = SignupForm::generateRandomPassword();
-            $user->save();
+            $id = $user->save();
 
             $model->load($post);
-            if(empty($model->errors)) {
-                Yii::$app->session->set('new-student',['user_id' => $user->id,'fname' => $model->fname, 'lname' => $model->lname, 'passport' => $model->passport]);
+            if(empty($model->errors) && $id != false) {
+                Yii::$app->session->set('new-student',['user_id' => $id,'fname' => $model->fname, 'lname' => $model->lname, 'passport' => $model->passport]);
                 Yii::$app->session->set('step-1',1);
+                Yii::$app->session->setFlash('success', Yii::t('main','Foydalanuvchi saqlandi!'));
                 return $this->render('create_student_2', ['model' => $model]);
             }
-            Yii::$app->session->setFlash('errors', $user->errors);
+            if(!empty($model->errors)) {
+                foreach ($model->errors as $error) {
+                    Yii::$app->session->addFlash('danger', Yii::t('main',$error[0]));
+                }
+            }
+            if(!empty($user->errors)) {
+                foreach ($user->errors as $error) {
+                    Yii::$app->session->addFlash('danger', Yii::t('main',$error[0]));
+                }
+            }
+
         }
         return $this->referrer();
     }

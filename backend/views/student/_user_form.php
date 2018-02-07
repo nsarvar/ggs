@@ -11,7 +11,7 @@ use yii\widgets\ActiveForm;
 ?>
 
 <div class="tab-form">
-    <?php $form = ActiveForm::begin() ?>
+    <?php $form = ActiveForm::begin(['action' => '/student/save-user']) ?>
 
     <?= $form->field($user, 'username')->textInput() ?>
 
