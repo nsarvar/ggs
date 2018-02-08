@@ -4,6 +4,7 @@ namespace backend\controllers;
 
 use common\components\TimeTable;
 use common\models\Subject;
+use common\models\Times;
 use frontend\models\SignupForm;
 use Yii;
 use common\models\Student;
@@ -173,6 +174,45 @@ class StudentController extends Controller
     public function actionCreateStudent4() {
         $time = new TimeTable();
         return $this->render('create_student_4',['weekdays' => $time->getWeekDays(), 'hours' => $time->getHours()]);
+    }
+
+    public function actionFreeTimes($id) {
+        $times = Times::getByParentAndType($id,Times::TYPE_STUDENT);
+        $time = new TimeTable();
+        if($post = Yii::$app->request->post()) {
+            foreach (array_slice($post,1) as $key => $value) {
+                $keys = explode('-',$key);
+                $weekday = empty($keys[1]) ? 0 : $keys[1];
+                $hour = empty($keys[2]) ? 0 : $keys[2];
+                if($value == 1) {
+                   if(!empty($time->getWeekDays()[$weekday]) && !empty($time->getHours()[$hour]) && !Times::find()->andFilterWhere(['parent_id' => $id, 'type' => Times::TYPE_STUDENT, 'weekday' => $weekday, 'time' => $hour])->exists()) {
+                       $model = new Times();
+                       $model->type = Times::TYPE_STUDENT;
+                       $model->parent_id = $id;
+                       $model->weekday = $weekday;
+                       $model->time = $hour;
+                       if(!$model->save())  {
+                           Yii::$app->session->addFlash('danger',Yii::t('main','Ma\'lumotlartni saqlashda xatolik! Programmistlarga murojaat qiling!'));
+                           return $this->referrer();
+                       }
+                   }
+
+                } else {
+                    Times::deleteAll(['parent_id' => $id, 'type' => Times::TYPE_STUDENT, 'weekday' => $weekday, 'time' => $hour]);
+                }
+            }
+            Yii::$app->session->addFlash('success',Yii::t('main','Bo\'sh vaqtlar muvaffaqqiyatli saqlandi!'));
+            return $this->redirect(['view', 'id' => $id]);
+
+        }
+//        $this->dump(Times::hasTime($times,99,3));
+        return $this->render('free_times',[
+                'times' => $times,
+                'weekdays' => $time->getWeekDays(),
+                'hours' => $time->getHours(),
+                'parent' => $id,
+                'type' => Times::TYPE_STUDENT
+            ]);
     }
     /**
      * Finds the Student model based on its primary key value.

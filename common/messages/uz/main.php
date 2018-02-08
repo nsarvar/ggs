@@ -144,4 +144,5 @@ return [
     'This username has already been taken.' => 'Ushbu foydalanuvchi nomi band. Iltimos boshqa foydalanuvchi nomi tanlang.',
     'Sub Subjects' => 'Fan darajalari',
     'Create Sub Subject' => 'Fan darajasi yaratish',
+    'Free times' => 'Bo\'sh vaqtlari',
 ];

@@ -5,6 +5,8 @@
  * Date: 2018/02/06
  * Time: 23:52
  */
+
+use common\models\Times;
 use kartik\checkbox\CheckboxX;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
@@ -32,6 +34,7 @@ use yii\widgets\ActiveForm;
                             echo CheckboxX::widget([
                                 'name' => $name,
                                 'options' => ['id' => $name],
+                                'value' =>Times::hasTime($times,$key,$key2),
                                 'pluginOptions'=>['threeState'=>false]
                             ]);
                             echo $hour;

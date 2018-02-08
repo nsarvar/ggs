@@ -23,22 +23,33 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
-            'id',
-            'code',
+            [
+                'attribute' => 'id',
+                'contentOptions'=>['style'=>'width: 30px;']
+            ],
             'fname',
             'lname',
             'bdate',
             //'email:email',
-            //'passport',
-            //'address:ntext',
+            'passport',
+            'address:ntext',
             //'phone',
             //'parent_id',
             //'created_at',
             //'updated_at',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'buttons'=>[
+                    'freetime'=>function ($url, $model) {
+                        $customurl=Yii::$app->getUrlManager()->createUrl(['/student/free-times','id'=>$model['id']]); //$model->id для AR
+                        return \yii\helpers\Html::a( '<span class="glyphicon glyphicon-time"></span>', $customurl,
+                            ['title' => Yii::t('yii', 'Free times'), 'data-pjax' => '0']);
+                    }
+                ],
+                'template'=>'{view} {freetime} {update} {delete}',
+
+            ],
         ],
     ]); ?>
 </div>
