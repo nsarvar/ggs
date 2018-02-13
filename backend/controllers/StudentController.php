@@ -3,8 +3,10 @@
 namespace backend\controllers;
 
 use common\components\TimeTable;
+use common\models\Files;
 use common\models\Subject;
 use common\models\Times;
+use Faker\Provider\File;
 use frontend\models\SignupForm;
 use Yii;
 use common\models\Student;
@@ -12,6 +14,7 @@ use common\models\StudentSearch;
 use backend\components\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
 use yii\web\User;
 
 /**
@@ -71,8 +74,21 @@ class StudentController extends Controller
     {
         $model = new Student();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($post = Yii::$app->request->post()) {
+            $model->load($post);
+//            $this->dump(UploadedFile::getInstance($model,'avatar'));
+            $model->code = (string)rand(1000,9999);
+
+            if($model->save())
+                return $this->redirect(['view', 'id' => $model->id]);
+            else {
+                if(!empty($model->errors)) {
+                    foreach ($model->errors as $error) {
+                        Yii::$app->session->addFlash('danger', Yii::t('main',$error[0]));
+                    }
+                }
+                return $this->referrer();
+            }
         }
 
         return $this->render('create', [
@@ -115,14 +131,12 @@ class StudentController extends Controller
     }
 
     public function actionCreateStudent() {
-        $session = Yii::$app->session;
-        if(!$session->has('create-student')) {
-//            $session->set('create-student',1);
-            return $this->render('create-student');
-        } else {
-
+        $model = new Student();
+        if($post = Yii::$app->request->post()) {
+            $model->load($post);
+            $this->dump($model);
         }
-        return $this->referrer();
+        return $this->render('create-student',['model' => $model]);
     }
 
     public function actionSaveUser() {

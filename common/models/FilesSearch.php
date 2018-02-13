@@ -5,12 +5,12 @@ namespace common\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\Subject;
+use common\models\Files;
 
 /**
- * SubjectSearch represents the model behind the search form of `common\models\Subject`.
+ * FilesSearch represents the model behind the search form of `common\models\Files`.
  */
-class SubjectSearch extends Subject
+class FilesSearch extends Files
 {
     /**
      * @inheritdoc
@@ -18,8 +18,8 @@ class SubjectSearch extends Subject
     public function rules()
     {
         return [
-            [['id','parent_id'], 'integer'],
-            [['name'], 'safe'],
+            [['id', 'size'], 'integer'],
+            [['filename', 'ext', 'filetype'], 'safe'],
         ];
     }
 
@@ -41,7 +41,7 @@ class SubjectSearch extends Subject
      */
     public function search($params)
     {
-        $query = Subject::find();
+        $query = Files::find();
 
         // add conditions that should always apply here
 
@@ -59,11 +59,13 @@ class SubjectSearch extends Subject
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'parent_id' => $this->parent_id,
             'id' => $this->id,
+            'size' => $this->size,
         ]);
 
-        $query->andFilterWhere(['like', 'name', $this->name]);
+        $query->andFilterWhere(['like', 'filename', $this->filename])
+            ->andFilterWhere(['like', 'ext', $this->ext])
+            ->andFilterWhere(['like', 'filetype', $this->filetype]);
 
         return $dataProvider;
     }

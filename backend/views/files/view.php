@@ -4,13 +4,13 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\SubSubject */
+/* @var $model common\models\Files */
 
-$this->title = $model->name;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('main', 'Sub Subjects'), 'url' => ['index']];
+$this->title = $model->id;
+$this->params['breadcrumbs'][] = ['label' => Yii::t('main', 'Files'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="sub-subject-view">
+<div class="files-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
@@ -29,8 +29,10 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'id',
-            'subject_id',
-            'name',
+            'filename',
+            'size',
+            'ext',
+            'filetype',
         ],
     ]) ?>
 

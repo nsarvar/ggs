@@ -3,16 +3,17 @@
 namespace backend\controllers;
 
 use Yii;
-use common\models\SubSubject;
-use common\models\SubSubjectSearch;
+use common\models\Files;
+use common\models\FilesSearch;
 use backend\components\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\Response;
 
 /**
- * SubSubjectController implements the CRUD actions for SubSubject model.
+ * FilesController implements the CRUD actions for Files model.
  */
-class SubSubjectController extends Controller
+class FilesController extends Controller
 {
     /**
      * @inheritdoc
@@ -30,12 +31,12 @@ class SubSubjectController extends Controller
     }
 
     /**
-     * Lists all SubSubject models.
+     * Lists all Files models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new SubSubjectSearch();
+        $searchModel = new FilesSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -45,7 +46,7 @@ class SubSubjectController extends Controller
     }
 
     /**
-     * Displays a single SubSubject model.
+     * Displays a single Files model.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
@@ -58,13 +59,13 @@ class SubSubjectController extends Controller
     }
 
     /**
-     * Creates a new SubSubject model.
+     * Creates a new Files model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new SubSubject();
+        $model = new Files();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -76,7 +77,7 @@ class SubSubjectController extends Controller
     }
 
     /**
-     * Updates an existing SubSubject model.
+     * Updates an existing Files model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -96,7 +97,7 @@ class SubSubjectController extends Controller
     }
 
     /**
-     * Deletes an existing SubSubject model.
+     * Deletes an existing Files model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -109,16 +110,24 @@ class SubSubjectController extends Controller
         return $this->redirect(['index']);
     }
 
+    public function actionDeleteFile($id) {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        $model = Files::find()->filterWhere(['filename' => $id])->one();
+        if(!empty($model) && $model->delete())
+            return true;
+        return false;
+    }
+
     /**
-     * Finds the SubSubject model based on its primary key value.
+     * Finds the Files model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return SubSubject the loaded model
+     * @return Files the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = SubSubject::findOne($id)) !== null) {
+        if (($model = Files::findOne($id)) !== null) {
             return $model;
         }
 

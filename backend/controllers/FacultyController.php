@@ -66,8 +66,18 @@ class FacultyController extends Controller
     {
         $model = new Faculty();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($post = Yii::$app->request->post()) {
+            $model->load($post);
+            if($model->save())
+                return $this->redirect(['view', 'id' => $model->id]);
+            else {
+                if(!empty($model->errors)) {
+                    foreach ($model->errors as $error) {
+                        Yii::$app->session->addFlash('danger', Yii::t('main',$error[0]));
+                    }
+                }
+                return $this->referrer();
+            }
         }
 
         return $this->render('create', [

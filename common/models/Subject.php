@@ -9,6 +9,7 @@ use yii\helpers\ArrayHelper;
  * This is the model class for table "subject".
  *
  * @property int $id
+ * @property int $parent_id
  * @property string $name
  *
  * @property Course[] $courses
@@ -31,6 +32,7 @@ class Subject extends \yii\db\ActiveRecord
         return [
             [['name'], 'required'],
             [['name'], 'string', 'max' => 50],
+            [['parent_id'], 'integer'],
         ];
     }
 
@@ -42,6 +44,7 @@ class Subject extends \yii\db\ActiveRecord
         return [
             'id' => Yii::t('main', 'ID'),
             'name' => Yii::t('main', 'Name'),
+            'parent_id' => Yii::t('main', 'Parent Subject'),
         ];
     }
 
@@ -61,5 +64,19 @@ class Subject extends \yii\db\ActiveRecord
     public static function getModelsAsMap() {
         $models = Subject::find()->all();
         return ArrayHelper::map($models,'id','name');
+    }
+
+    public static function getMainSubjectsAsMap()
+    {
+        $models = Subject::find()->andWhere(['parent_id' => null])->all();
+        return ArrayHelper::map($models,'id' ,'name');
+    }
+
+    public function getParent()
+    {
+        $model = Subject::findOne($this->parent_id);
+        if(!empty($model->name))
+            return $model->name;
+        return false;
     }
 }

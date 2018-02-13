@@ -4,13 +4,13 @@ use yii\helpers\Html;
 
 
 /* @var $this yii\web\View */
-/* @var $model common\models\SubSubject */
+/* @var $model common\models\Files */
 
-$this->title = Yii::t('main', 'Create Sub Subject');
-$this->params['breadcrumbs'][] = ['label' => Yii::t('main', 'Sub Subjects'), 'url' => ['index']];
+$this->title = Yii::t('main', 'Create Files');
+$this->params['breadcrumbs'][] = ['label' => Yii::t('main', 'Files'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="sub-subject-create">
+<div class="files-create">
 
     <h1><?= Html::encode($this->title) ?></h1>
 

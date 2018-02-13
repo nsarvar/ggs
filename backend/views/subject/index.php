@@ -1,5 +1,6 @@
 <?php
 
+use common\models\Subject;
 use yii\helpers\Html;
 use yii\grid\GridView;
 
@@ -26,6 +27,13 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'id',
                 'contentOptions'=>['style'=>'width: 30px;']
+            ],
+            [
+                'attribute' => 'parent_id',
+                'filter' => Subject::getMainSubjectsAsMap(),
+                'content' => function($data) {
+                    return $data->parent;
+                }
             ],
             'name',
 
