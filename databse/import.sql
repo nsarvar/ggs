@@ -14,3 +14,6 @@ CREATE TABLE files (
    filetype varchar(25) NOT NULL,
    CONSTRAINT files_pk PRIMARY KEY (id)
 );
+
+ALTER TABLE  `course` ADD  `course_group_id` INT NULL ,
+ADD  `faculty_id` INT NULL ;

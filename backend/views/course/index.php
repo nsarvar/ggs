@@ -1,5 +1,8 @@
 <?php
 
+use common\models\CourseGroup;
+use common\models\Faculty;
+use common\models\Subject;
 use yii\helpers\Html;
 use yii\grid\GridView;
 
@@ -23,13 +26,36 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
-            'id',
-            'subject_id',
+            [
+                'attribute' => 'id',
+                'contentOptions'=>['style'=>'width: 30px;']
+            ],
+            [
+                'attribute' => 'subject_id',
+                'filter' => Subject::getModelsAsMap(),
+                'content' => function($data) {
+                    return $data->subjectName;
+                }
+            ],
+            [
+                'attribute' => 'course_group_id',
+                'filter' => CourseGroup::getAllModelsAsMap(),
+                'content' => function($data) {
+                    return $data->catName;
+                }
+            ],
+            [
+                'attribute' => 'faculty_id',
+                'filter' => Faculty::getAllModelsAsMap(),
+                'content' => function($data) {
+                    return $data->facultyName;
+                }
+            ],
             'title',
-            'desciption:ntext',
-            'other_detail:ntext',
+//            'desciption:ntext',
+//            'other_detail:ntext',
+            //'course_group_id',
+            //'faculty_id',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

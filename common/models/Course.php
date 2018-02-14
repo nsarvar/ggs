@@ -12,6 +12,8 @@ use Yii;
  * @property string $title
  * @property string $desciption
  * @property string $other_detail
+ * @property int $course_group_id
+ * @property int $faculty_id
  *
  * @property Subject $subject
  * @property CourseEnroll[] $courseEnrolls
@@ -37,7 +39,7 @@ class Course extends \yii\db\ActiveRecord
     {
         return [
             [['subject_id', 'title', 'desciption', 'other_detail'], 'required'],
-            [['subject_id'], 'integer'],
+            [['subject_id', 'course_group_id', 'faculty_id'], 'integer'],
             [['desciption', 'other_detail'], 'string'],
             [['title'], 'string', 'max' => 200],
             [['subject_id'], 'exist', 'skipOnError' => true, 'targetClass' => Subject::className(), 'targetAttribute' => ['subject_id' => 'id']],
@@ -55,6 +57,11 @@ class Course extends \yii\db\ActiveRecord
             'title' => Yii::t('main', 'Title'),
             'desciption' => Yii::t('main', 'Desciption'),
             'other_detail' => Yii::t('main', 'Other Detail'),
+            'course_group_id' => Yii::t('main', 'Course Group ID'),
+            'faculty_id' => Yii::t('main', 'Faculty ID'),
+            'subjectName' => Yii::t('main', 'Subject Name'),
+            'catName' => Yii::t('main', 'Cat Name'),
+            'facultyName' => Yii::t('main', 'Faculty Name'),
         ];
     }
 
@@ -104,5 +111,27 @@ class Course extends \yii\db\ActiveRecord
     public function getSchedules()
     {
         return $this->hasMany(Schedule::className(), ['course_id' => 'id']);
+    }
+
+
+    public function getSubjectName() {
+        $model = Subject::findOne($this->subject_id);
+        if(!empty($model))
+            return $model->name;
+        return false;
+    }
+
+    public function getCatName() {
+        $model = CourseGroup::findOne($this->course_group_id);
+        if(!empty($model))
+            return $model->name;
+        return false;
+    }
+
+    public function getFacultyName() {
+        $model = Faculty::findOne($this->faculty_id);
+        if(!empty($model))
+            return $model->fullname;
+        return false;
     }
 }

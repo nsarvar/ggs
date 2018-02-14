@@ -11,6 +11,8 @@ namespace backend\controllers;
 use backend\components\Controller;
 use common\models\AuthAssignment;
 use common\models\AuthItem;
+use common\models\Subject;
+use common\models\SubjectCategory;
 use common\models\User;
 use common\rules\AuthorRule;
 use Yii;
@@ -70,8 +72,7 @@ class DeveloperController extends Controller
     }
 
     public function actionTest() {
-        $model = AuthItem::findOne('admin');
-        $this->dump($model->allNotUsers);
+        $this->dump(Subject::getModelsToSelect());
     }
 
 }

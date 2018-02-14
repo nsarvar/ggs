@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "faculty".
@@ -97,5 +98,10 @@ class Faculty extends \yii\db\ActiveRecord
 
     public function getFulltime() {
         return $this->full_available == 1 ? Yii::t('main','Ha') : Yii::t('main','Yo\'q');
+    }
+
+    public static function getAllModelsAsMap() {
+        $models = Faculty::find()->all();
+        return ArrayHelper::map($models,'id','fullname');
     }
 }

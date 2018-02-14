@@ -51,4 +51,12 @@ class Category extends \yii\db\ActiveRecord
     {
         return $this->hasMany(CourseCategory::className(), ['category_id' => 'id']);
     }
+
+    public static function getAllModels() {
+        return Category::find()->all();
+    }
+
+    public function hasValue($subject_id) {
+        return SubjectCategory::hasModel($subject_id, $this->id);
+    }
 }

@@ -2,19 +2,17 @@
 
 namespace backend\controllers;
 
-use common\models\Category;
-use common\models\SubjectCategory;
 use Yii;
-use common\models\Subject;
-use common\models\SubjectSearch;
+use common\models\CourseGroup;
+use common\models\CourseGroupSearch;
 use backend\components\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * SubjectController implements the CRUD actions for Subject model.
+ * CourseGroupController implements the CRUD actions for CourseGroup model.
  */
-class SubjectController extends Controller
+class CourseGroupController extends Controller
 {
     /**
      * @inheritdoc
@@ -32,12 +30,12 @@ class SubjectController extends Controller
     }
 
     /**
-     * Lists all Subject models.
+     * Lists all CourseGroup models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new SubjectSearch();
+        $searchModel = new CourseGroupSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -47,7 +45,7 @@ class SubjectController extends Controller
     }
 
     /**
-     * Displays a single Subject model.
+     * Displays a single CourseGroup model.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
@@ -60,24 +58,15 @@ class SubjectController extends Controller
     }
 
     /**
-     * Creates a new Subject model.
+     * Creates a new CourseGroup model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Subject();
+        $model = new CourseGroup();
 
-        if ($post = Yii::$app->request->post()) {
-            $model->load($post);
-            $model->save();
-            foreach (Category::getAllModels() as $cat) {
-                if(!empty($post['cat-'.$cat->id]) && $post['cat-'.$cat->id] == 1) {
-                    SubjectCategory::saveModel($model->id,$cat->id);
-                } else {
-                    SubjectCategory::deleteModel($model->id,$cat->id);
-                }
-            }
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
@@ -87,7 +76,7 @@ class SubjectController extends Controller
     }
 
     /**
-     * Updates an existing Subject model.
+     * Updates an existing CourseGroup model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -97,16 +86,7 @@ class SubjectController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($post = Yii::$app->request->post()) {
-            $model->load($post);
-            foreach (Category::getAllModels() as $cat) {
-                if(!empty($post['cat-'.$cat->id]) && $post['cat-'.$cat->id] == 1) {
-                    SubjectCategory::saveModel($model->id,$cat->id);
-                } else {
-                    SubjectCategory::deleteModel($model->id,$cat->id);
-                }
-            }
-            $model->save();
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
@@ -116,7 +96,7 @@ class SubjectController extends Controller
     }
 
     /**
-     * Deletes an existing Subject model.
+     * Deletes an existing CourseGroup model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -130,15 +110,15 @@ class SubjectController extends Controller
     }
 
     /**
-     * Finds the Subject model based on its primary key value.
+     * Finds the CourseGroup model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Subject the loaded model
+     * @return CourseGroup the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Subject::findOne($id)) !== null) {
+        if (($model = CourseGroup::findOne($id)) !== null) {
             return $model;
         }
 

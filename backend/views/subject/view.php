@@ -33,7 +33,8 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'parent_id',
                 'value' => $model->parent,
-            ]
+            ],
+            'catsAsString'
         ],
     ]) ?>
 

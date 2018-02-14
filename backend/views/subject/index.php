@@ -36,6 +36,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 }
             ],
             'name',
+            'catsAsString',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

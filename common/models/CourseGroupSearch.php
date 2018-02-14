@@ -5,12 +5,12 @@ namespace common\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\Course;
+use common\models\CourseGroup;
 
 /**
- * CourseSearch represents the model behind the search form of `common\models\Course`.
+ * CourseGroupSearch represents the model behind the search form of `common\models\CourseGroup`.
  */
-class CourseSearch extends Course
+class CourseGroupSearch extends CourseGroup
 {
     /**
      * @inheritdoc
@@ -18,8 +18,8 @@ class CourseSearch extends Course
     public function rules()
     {
         return [
-            [['id', 'subject_id', 'course_group_id', 'faculty_id'], 'integer'],
-            [['title', 'desciption', 'other_detail'], 'safe'],
+            [['id', 'size'], 'integer'],
+            [['name'], 'safe'],
         ];
     }
 
@@ -41,7 +41,7 @@ class CourseSearch extends Course
      */
     public function search($params)
     {
-        $query = Course::find();
+        $query = CourseGroup::find();
 
         // add conditions that should always apply here
 
@@ -60,14 +60,10 @@ class CourseSearch extends Course
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'subject_id' => $this->subject_id,
-            'course_group_id' => $this->course_group_id,
-            'faculty_id' => $this->faculty_id,
+            'size' => $this->size,
         ]);
 
-        $query->andFilterWhere(['like', 'title', $this->title])
-            ->andFilterWhere(['like', 'desciption', $this->desciption])
-            ->andFilterWhere(['like', 'other_detail', $this->other_detail]);
+        $query->andFilterWhere(['like', 'name', $this->name]);
 
         return $dataProvider;
     }

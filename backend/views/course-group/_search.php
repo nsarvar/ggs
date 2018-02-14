@@ -4,11 +4,11 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\CourseSearch */
+/* @var $model common\models\CourseGroupSearch */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="course-search">
+<div class="course-group-search">
 
     <?php $form = ActiveForm::begin([
         'action' => ['index'],
@@ -17,17 +17,9 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'id') ?>
 
-    <?= $form->field($model, 'subject_id') ?>
+    <?= $form->field($model, 'name') ?>
 
-    <?= $form->field($model, 'title') ?>
-
-    <?= $form->field($model, 'desciption') ?>
-
-    <?= $form->field($model, 'other_detail') ?>
-
-    <?php // echo $form->field($model, 'course_group_id') ?>
-
-    <?php // echo $form->field($model, 'faculty_id') ?>
+    <?= $form->field($model, 'size') ?>
 
     <div class="form-group">
         <?= Html::submitButton(Yii::t('main', 'Search'), ['class' => 'btn btn-primary']) ?>
