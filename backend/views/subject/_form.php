@@ -14,7 +14,7 @@ use yii\widgets\ActiveForm;
     <?php $form = ActiveForm::begin(); ?>
 
     <?= $form->field($model, 'parent_id')->dropDownList(Subject::getMainSubjectsAsMap(),[
-        'prompt' => Yii::t('main','Asosiy fanni tanlang')
+        'prompt' => Yii::t('main','Asosiy fanni yo\'q')
     ]) ?>
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>

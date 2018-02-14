@@ -29,7 +29,7 @@ use yii\widgets\ActiveForm;
                 'removeLabel' => Yii::t('main','Delete'),
                 'browseLabel' => Yii::t('main','Rasm tanlang'),
                 'showUpload' => false,
-                'deleteUrl' => '/files/delete-file/' .  $model->avatarModel->filename,
+                'deleteUrl' => empty($model->avatarModel->filename) ? '#' : '/files/delete-file/' . $model->avatarModel->filename,
                 'initialPreview' => empty(!$model->avatarModel) && $model->avatarModel->hasFile ? [Html::img($model->avatarModel->relativeLink,['class' => 'avatar-upload'])] : []
             ]
         ]

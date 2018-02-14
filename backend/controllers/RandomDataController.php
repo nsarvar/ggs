@@ -10,6 +10,7 @@ namespace backend\controllers;
 
 use backend\components\Controller;
 use common\models\Faculty;
+use common\models\Files;
 use common\models\Student;
 
 class RandomDataController extends Controller
@@ -21,6 +22,7 @@ class RandomDataController extends Controller
 //            $names = $this->getNames()[rand(0,1)];
 //            $fnames = $names['names'];
 //            $lnames = $names['last_names'];
+//            $photos = $names['photos'];
 //            $model->fname = $fnames[array_rand($fnames)];
 //            $model->lname = $lnames[array_rand($lnames)];
 //            $model->bdate = date('Y-m-d',rand(631219282,915216082));
@@ -30,10 +32,17 @@ class RandomDataController extends Controller
 //            $model->created_at = date('Y-m-d H:i:s',time());
 //            $model->updated_at = $model->created_at;
 //            $model->address = $this->getAddres();
+//            $model->avatar = Files::saveFromFile($photos[array_rand($photos)]);
 //            if(!$model->save())
 //                $this->dump($model->errors);
 //        }
-        $this->dump('Finish');
+//        $this->dump('Finish');
+    }
+
+    public function actionDeleteAllStudents() {
+//        $models = Student::find()->all();
+//        foreach ($models as $model)
+//            $model->delete();
     }
 
     public function actionRandomTeachers() {
@@ -83,7 +92,19 @@ class RandomDataController extends Controller
                     'Mansurova',
                     'Yo\'ldosheva',
                     'Zokirova',
-                ]
+                ],
+                'photos' => [
+                    '11',
+                    '12',
+                    '13',
+                    '14',
+                    '15',
+                    '16',
+                    '17',
+                    '18',
+                    '19',
+                    '20',
+                ],
             ],
             1 => [
                 'names' => [
@@ -110,7 +131,19 @@ class RandomDataController extends Controller
                     'Mansurov',
                     'Yo\'ldoshev',
                     'Zokirov',
-                ]
+                ],
+                'photos' => [
+                    '1',
+                    '2',
+                    '3',
+                    '4',
+                    '5',
+                    '6',
+                    '7',
+                    '8',
+                    '9',
+                    '10',
+                ],
             ]
 
         ];

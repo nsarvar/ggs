@@ -79,7 +79,7 @@ return [
     'Notices' => '',
     'Other Detail' => '',
     'Parent' => '',
-    'Parent ID' => '',
+    'Parent ID' => 'Ota-onasi',
     'Parents' => '',
     'Passport' => 'Passport seriyasi va raqami',
     'Phone' => 'Telefon',
@@ -114,7 +114,7 @@ return [
     'Update Post: {nameAttribute}' => '',
     'Update Schedule: {nameAttribute}' => '',
     'Update Student: {nameAttribute}' => '',
-    'Update Subject: {nameAttribute}' => '',
+    'Update Subject: {nameAttribute}' => 'Fanni tahrirlash: {nameAttribute}',
     'Updated At' => 'Tahrirlangan sana',
     'Weekday' => '',
     'Password' => '@@Parol@@',
@@ -146,5 +146,7 @@ return [
     'Create Sub Subject' => 'Fan darajasi yaratish',
     'Free times' => 'Bo\'sh vaqtlari',
     'Parent Subject' => 'Asosiy fan',
-    'Full Time Faculty' => 'To\'liq bo\'sh'
+    'Full Time Faculty' => 'To\'liq bo\'sh',
+    'Avatar Image' => 'Rasmi',
+    'Avatar' => 'Rasmi',
 ];

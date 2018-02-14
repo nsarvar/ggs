@@ -10,6 +10,7 @@
                     ['label' => Yii::t('main','Dashboard'), 'icon' => 'home', 'url' => ['/']],
                     ['label' => Yii::t('main','Students'), 'icon' => 'users', 'url' => ['/student/index']],
                     ['label' => Yii::t('main','Teachers'), 'icon' => 'user-secret', 'url' => ['/faculty/index']],
+                    ['label' => Yii::t('main','Subjects'), 'icon' => 'book', 'url' => ['/subject/index']],
                     ['label' => Yii::t('main','Finance'), 'icon' => 'money', 'url' => ['#']],
                     ['label' => Yii::t('main','Courses'), 'icon' => 'list-alt', 'url' => ['#']],
                     ['label' => Yii::t('main','Time table'), 'icon' => 'clock-o', 'url' => ['#']],

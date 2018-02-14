@@ -24,6 +24,12 @@ $this->params['breadcrumbs'][] = $this->title;
         'filterModel' => $searchModel,
         'columns' => [
             [
+                'attribute' => 'avatarImage',
+                'content' => function($data) {
+                    return '<img class="avatar-mini" src="'.$data->avatarImage.'">';
+                }
+            ],
+            [
                 'attribute' => 'id',
                 'contentOptions'=>['style'=>'width: 30px;']
             ],

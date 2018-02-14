@@ -26,22 +26,31 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= Html::a(Yii::t('main', 'Free times'), ['free-times', 'id' => $model->id], ['class' => 'btn btn-success']) ?>
     </p>
 
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            'id',
-            'code',
-            'fname',
-            'lname',
-            'bdate',
-            'email:email',
-            'passport',
-            'address:ntext',
-            'phone',
-            'parent_id',
-            'created_at',
-            'updated_at',
-        ],
-    ]) ?>
+    <div class="row">
+        <div class="col-lg-6 col-md-6">
+            <?= DetailView::widget([
+                'model' => $model,
+                'attributes' => [
+                    'id',
+                    'code',
+                    'fname',
+                    'lname',
+                    'bdate',
+                    'email:email',
+                    'passport',
+                    'address:ntext',
+                    'phone',
+                    'parent_id',
+                    'created_at',
+                    'updated_at',
+                ],
+            ]) ?>
+
+        </div>
+        <div class="col-lg-6 col-md-6 text-center">
+            <img src="<?=$model->avatarImage?>" alt="<?=Yii::t('main','avatar')?>" class="avatar-image">
+        </div>
+    </div>
+
 
 </div>
