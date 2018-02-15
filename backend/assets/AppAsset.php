@@ -19,6 +19,7 @@ class AppAsset extends AssetBundle
     public $js = [
         'js/jquery.dataTables.js',
         'js/dataTables.bootstrap.js',
+        'js/main.js',
     ];
     public $depends = [
         'yii\web\YiiAsset',

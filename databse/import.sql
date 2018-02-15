@@ -17,3 +17,22 @@ CREATE TABLE files (
 
 ALTER TABLE  `course` ADD  `course_group_id` INT NULL ,
 ADD  `faculty_id` INT NULL ;
+
+CREATE TABLE `subject_category` (
+  `id` int(11) NOT NULL,
+  `subject_id` int(11) NOT NULL,
+  `category_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+ALTER TABLE `subject_category`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `subject_id` (`subject_id`),
+  ADD KEY `category_id` (`category_id`);
+
+ALTER TABLE `subject_category`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `subject_category`
+  ADD CONSTRAINT `subject_category_ibfk_1` FOREIGN KEY (`subject_id`) REFERENCES `subject` (`id`),
+  ADD CONSTRAINT `subject_category_ibfk_2` FOREIGN KEY (`category_id`) REFERENCES `category` (`id`);
+COMMIT;

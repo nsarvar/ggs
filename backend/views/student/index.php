@@ -50,12 +50,16 @@ $this->params['breadcrumbs'][] = $this->title;
                     'freetime'=>function ($url, $model) {
                         $customurl=Yii::$app->getUrlManager()->createUrl(['/student/free-times','id'=>$model['id']]); //$model->id для AR
                         return \yii\helpers\Html::a( '<span class="glyphicon glyphicon-time"></span>', $customurl,
-                            ['title' => Yii::t('yii', 'Free times'), 'data-pjax' => '0']);
+                            ['title' => Yii::t('yii', 'Bo\'sh vaqtlari'), 'data-pjax' => '0']);
                     }
                 ],
                 'template'=>'{view} {freetime} {update} {delete}',
 
             ],
         ],
+        'tableOptions' => [
+            'class'=>'table table-striped table-bordered text-center-table'
+        ],
+
     ]); ?>
 </div>

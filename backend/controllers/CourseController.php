@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use common\models\StudentSearch;
 use Yii;
 use common\models\Course;
 use common\models\CourseSearch;
@@ -107,6 +108,23 @@ class CourseController extends Controller
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
+    }
+
+    public function actionEnroll($id) {
+        $course = Course::findOne($id);
+        if(empty($course)) {
+            Yii::$app->session->addFlash('danger', Yii::t('main','Kurs topilmadi!'));
+            return $this->referrer();
+        }
+
+        $searchModel = new StudentSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        return $this->render('enroll',[
+            'course' => $course,
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+
     }
 
     /**

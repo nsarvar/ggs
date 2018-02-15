@@ -57,7 +57,17 @@ $this->params['breadcrumbs'][] = $this->title;
             //'course_group_id',
             //'faculty_id',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'buttons'=>[
+                    'enroll'=>function ($url, $model) {
+                        $customurl=Yii::$app->getUrlManager()->createUrl(['/course/enroll','id'=>$model['id']]); //$model->id для AR
+                        return \yii\helpers\Html::a( '<span class="glyphicon glyphicon-paperclip"></span>', $customurl,
+                            ['title' => Yii::t('yii', 'Kursga yozilish'), 'data-pjax' => '0']);
+                    }
+                ],
+                'template'=>'{view} {enroll} {update} {delete}',
+            ],
         ],
     ]); ?>
 </div>

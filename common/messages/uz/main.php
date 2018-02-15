@@ -31,7 +31,7 @@ return [
     'Chorshanba' => '',
     'Code' => '',
     'Course Categories' => '',
-    'Course Group ID' => 'Kurs kategoriyasi',
+    'Course Group ID' => 'Guruh turi',
     'Create Auth Item' => '',
     'Create Course Category' => '',
     'Create Exam' => '',
@@ -95,6 +95,7 @@ return [
     'Seshanba' => '',
     'Shanba' => '',
     'Size' => '',
+    'Size Group' => 'O\'quvchilar soni',
     'Start Time' => '',
     'Status' => '',
     'Student ID' => '',
@@ -191,5 +192,6 @@ return [
     'Username' => 'Foydalanuvchi nomi',
     'Subject Name' => 'Fan nomi',
     'Cat Name' => 'Kurs kategoriyasi',
-    'Faculty Name' => 'O\'qituvchisi'
+    'Faculty Name' => 'O\'qituvchisi',
+    'Course Enroll' => 'Kursga yozilish'
 ];

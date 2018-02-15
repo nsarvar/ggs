@@ -42,7 +42,7 @@ class CourseGroup extends \yii\db\ActiveRecord
         return [
             'id' => Yii::t('main', 'ID'),
             'name' => Yii::t('main', 'Name'),
-            'size' => Yii::t('main', 'Size'),
+            'size' => Yii::t('main', 'Size Group'),
         ];
     }
 

@@ -1,0 +1,1 @@
+1.Kurs qo'shishda o'qituvchi jadvali bilan relation bo'lsa error chiqaryapti
