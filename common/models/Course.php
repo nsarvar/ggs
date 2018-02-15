@@ -134,4 +134,22 @@ class Course extends \yii\db\ActiveRecord
             return $model->fullname;
         return false;
     }
+
+    public function getSize() {
+        $model = CourseGroup::findOne($this->course_group_id);
+        if(!empty($model))
+            return $model->size;
+        return false;
+    }
+
+    public function getEnrollCount() {
+        $count = CourseEnroll::find()->filterWhere(['course_id' => $this->id])->count();
+        return $count;
+    }
+
+    public function getDiff() {
+        if($this->size != false)
+            return $this->size - $this->enrollCount;
+        return false;
+    }
 }

@@ -62,4 +62,33 @@ class CourseEnroll extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Student::className(), ['id' => 'student_id']);
     }
+
+    public static function hasModel($course, $student) {
+        return CourseEnroll::find()->andFilterWhere(['course_id' => $course, 'student_id' => $student])->exists();
+    }
+
+    public static function getModel($course, $student) {
+        if(CourseEnroll::hasModel($course,$student)) {
+            return CourseEnroll::find()->andFilterWhere(['course_id' => $course, 'student_id' => $student])->one();
+        }
+        return false;
+    }
+
+    public static function saveModel($course, $student) {
+        if(!empty(Course::findOne($course)) && !empty(Student::findOne($student)) && !CourseEnroll::hasModel($course, $student)) {
+            $model = new CourseEnroll();
+            $model->course_id = $course;
+            $model->student_id = $student;
+            return $model->save();
+        }
+        return false;
+    }
+
+    public static function deleteModel($course, $student) {
+        if(CourseEnroll::hasModel($course, $student)) {
+            return CourseEnroll:: deleteAll(['course_id' => $course,'student_id' => $student]);
+        }
+        return false;
+    }
+
 }
