@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "course_enroll".
@@ -89,6 +90,15 @@ class CourseEnroll extends \yii\db\ActiveRecord
             return CourseEnroll:: deleteAll(['course_id' => $course,'student_id' => $student]);
         }
         return false;
+    }
+
+    public static function getByCourse($course) {
+        $array = [];
+        $models = CourseEnroll::find()->select('student_id')->filterWhere(['course_id' => $course])->asArray()->all();
+        foreach ($models as $model) {
+            $array []= $model['student_id'];
+        }
+        return $array;
     }
 
 }

@@ -26,10 +26,10 @@ $this->title = Yii::t('main','"{course}"ga yozilish',['course' => $course->title
         &ensp;
         <?= Yii::t('main','Belgilandi <span> <span id="count-enroll">{count}</span> ta </span>',['count' => 0])?>
     </h4>
-    <?php ActiveForm::begin() ?>
     <p>
-        <button class="btn btn-success" type="submit"><?=Yii::t('main','Kursga yozish')?></button>
+        <button class="btn btn-success" id="enroll-to-course" type="submit"><?=Yii::t('main','Kursga yozish')?></button>
         <?= Html::a(Yii::t('main', Yii::t('main','Kurs o\'quvchilari')), ['enroll-student', 'id' => $course->id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a(Yii::t('main', Yii::t('main','Barcha kurslar')), ['index'], ['class' => 'btn btn-primary']) ?>
     </p>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
@@ -55,6 +55,7 @@ $this->title = Yii::t('main','"{course}"ga yozilish',['course' => $course->title
             'class'=>'table table-striped table-bordered text-center-table'
         ],
     ]); ?>
+    <?php ActiveForm::begin(['options' => ['id' => 'enroll-form']]) ?>
     <?php ActiveForm::end() ?>
 
 </div>

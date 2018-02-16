@@ -25,12 +25,16 @@ $this->title = $course->title;
         <?=Yii::t('main','Kurs <span>{count} ta</span> o\'quvchi uchun mo\'ljallangan.',['count' => $course->size])?>
         <?=Yii::t('main','Kursda <span>{count} ta </span> bo\'sh joy bor.',['count' => $course->diff])?>
     </h4>
-    <?php ActiveForm::begin() ?>
     <p>
-        <?= Html::submitButton(Yii::t('main','Kursdan o\'chirish'),[
+        <?php
+        if($dataProvider->totalCount>0)
+
+            echo Html::button(Yii::t('main','Kursdan o\'chirish'),[
                 'class' => 'btn btn-danger',
-                'data-confirm' => Yii::t('main','Haqiqatdan ham ushbu o\'quvchilarni kursdan o\'chirmoqchimisiz?')
-            ]) ?>
+                'data-confirm' => Yii::t('main','Haqiqatdan ham ushbu o\'quvchilarni kursdan o\'chirmoqchimisiz?'),
+                'id' => 'enroll-to-course'
+            ])
+        ?>
         <?= Html::a(Yii::t('main', Yii::t('main','Barcha kurslar')), ['index'], ['class' => 'btn btn-primary']) ?>
         <?= Html::a(Yii::t('main', Yii::t('main','Kursga yangi o\'quvchi qo\'shish')), ['enroll','id' => $course->id], ['class' => 'btn btn-success']) ?>
     </p>
@@ -82,9 +86,10 @@ $this->title = $course->title;
             ],
         ],
         'tableOptions' => [
-            'class'=>'table table-striped table-bordered text-center-table'
+            'class'=>'table table-striped table-bordered text-center-table text-center-table-last-2'
         ],
     ]); ?>
+    <?php ActiveForm::begin(['options' => ['id' => 'enroll-form']]) ?>
     <?php ActiveForm::end() ?>
 
 </div>

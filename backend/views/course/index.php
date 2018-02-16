@@ -62,11 +62,18 @@ $this->params['breadcrumbs'][] = $this->title;
                 'buttons'=>[
                     'enroll'=>function ($url, $model) {
                         $customurl=Yii::$app->getUrlManager()->createUrl(['/course/enroll','id'=>$model['id']]); //$model->id для AR
-                        return \yii\helpers\Html::a( '<span class="glyphicon glyphicon-paperclip"></span>', $customurl,
-                            ['title' => Yii::t('yii', 'Kursga yozilish'), 'data-pjax' => '0']);
+                        return Html::a( '<span class="glyphicon glyphicon-paperclip"></span>', $customurl, [
+                                    'title' => Yii::t('yii', 'Kursga yozilish'), 'data-pjax' => '0'
+                                ]);
+                    },
+                    'enrollStudents' => function($url, $model) {
+                        $customurl = Yii::$app->getUrlManager()->createUrl(['/course/enroll-student','id' => $model['id']]);
+                        return Html::a('<span class="glyphicon glyphicon-user"></span>',$customurl,[
+                                'title' => Yii::t('main','Kurs o\'quvchilari'), 'data-pjax' => '0'
+                        ]);
                     }
                 ],
-                'template'=>'{view} {enroll} {update} {delete}',
+                'template'=>'{enrollStudents} {view} {enroll} {update} {delete}',
             ],
         ],
     ]); ?>

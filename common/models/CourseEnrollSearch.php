@@ -41,7 +41,7 @@ class CourseEnrollSearch extends Student
      */
     public function search($params, $course)
     {
-        $query = Student::find()->join('left join','course_enroll','student.id=course_enroll.student_id');
+        $query = Student::find();
 
         // add conditions that should always apply here
 
@@ -57,7 +57,7 @@ class CourseEnrollSearch extends Student
             return $dataProvider;
         }
 
-        $query->where('course_enroll.course_id='.$course);
+        $query->where(['in','id',CourseEnroll::getByCourse($course)]);
         // grid filtering conditions
         $query->andFilterWhere([
             'student.id' => $this->id,

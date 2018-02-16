@@ -25,6 +25,15 @@ $(document).ready(function () {
        return count;
    }
 
+   $('#enroll-to-course').on('click',function () {
+       var enrollForm = $('#enroll-form');
+       $('.enroll-check').each(function () {
+           if($(this).prop('checked'))
+               $(this).appendTo(enrollForm);
+       });
+       enrollForm.submit();
+   });
+
     // Course enroll end
 
 });

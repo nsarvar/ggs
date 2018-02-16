@@ -11,6 +11,7 @@ namespace backend\controllers;
 use backend\components\Controller;
 use common\models\AuthAssignment;
 use common\models\AuthItem;
+use common\models\CourseEnroll;
 use common\models\Subject;
 use common\models\SubjectCategory;
 use common\models\User;
@@ -72,7 +73,7 @@ class DeveloperController extends Controller
     }
 
     public function actionTest() {
-        $this->dump(Subject::getModelsToSelect());
+        $this->dump(CourseEnroll::getByCourse(4));
     }
 
 }

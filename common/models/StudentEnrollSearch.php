@@ -41,7 +41,7 @@ class StudentEnrollSearch extends Student
      */
     public function search($params, $course)
     {
-        $query = Student::find()->join('left join','course_enroll','student.id=course_enroll.student_id');
+        $query = Student::find();
 
         // add conditions that should always apply here
 
@@ -57,24 +57,25 @@ class StudentEnrollSearch extends Student
             return $dataProvider;
         }
 
-        $query->where('not course_enroll.course_id is null OR course_enroll.course_id != :course ',['course' => $course->id]);
+
+
+        $query->where(['not in', 'id', CourseEnroll::getByCourse($course)]);
         // grid filtering conditions
         $query->andFilterWhere([
             'student.id' => $this->id,
             'student.bdate' => $this->bdate,
-//            'parent_id' => $this->parent_id,
-//            'created_at' => $this->created_at,
-//            'updated_at' => $this->updated_at,
         ]);
+
 
         $query->andFilterWhere(['like', 'student.code', $this->code])
             ->andFilterWhere(['like', 'student.fname', $this->fname])
             ->andFilterWhere(['like', 'student.lname', $this->lname])
             ->andFilterWhere(['like', 'student.email', $this->email])
             ->andFilterWhere(['like', 'student.passport', $this->passport])
-//            ->andFilterWhere(['like', 'address', $this->address])
             ->andFilterWhere(['like', 'student.phone', $this->phone]);
-//            ->andWhere(['course_enroll.course_id' => $course]);
+
+//        print_r($query);
+//        exit;
 
         return $dataProvider;
     }

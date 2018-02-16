@@ -130,6 +130,9 @@ a.desc:after {
 .text-center-table > tbody > tr > td:first-child, .text-center-table > tbody > tr > td:last-child, .text-center-table > thead > tr > td:last-child {
     text-align: center;
 }
+.text-center-table-last-2  tr > td:nth-last-child(2) {
+    text-align: center;
+}
 /*flat begin*/
 .btn {
     border-radius: 0;
