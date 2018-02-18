@@ -19,7 +19,7 @@ class StudentSearch extends Student
     public function rules()
     {
         return [
-            [['id', 'parent_id'], 'integer'],
+            [['id', 'parent_id', 'gender'], 'integer'],
             [['code', 'fname', 'lname', 'bdate', 'email', 'passport', 'address', 'phone', 'created_at', 'updated_at'], 'safe'],
             [['fullName'], 'safe']
         ];
@@ -69,7 +69,8 @@ class StudentSearch extends Student
                 'parent_id',
                 'created_at',
                 'updated_at',
-                'avatarImage'
+                'avatarImage',
+                'gender'
             ]
         ]);
 
@@ -88,6 +89,7 @@ class StudentSearch extends Student
             'parent_id' => $this->parent_id,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
+            'gender' => $this->gender,
         ]);
 
         $query->andFilterWhere(['like', 'code', $this->code])

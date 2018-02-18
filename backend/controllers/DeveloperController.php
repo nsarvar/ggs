@@ -75,10 +75,7 @@ class DeveloperController extends Controller
     }
 
     public function actionTest() {
-        $model = Schedule::findOne(1);
-        print_r(strtotime($model->end_time).'<br>');
-        print_r(strtotime($model->start_time).'<br>');
-        $this->dump($model->getValidDate());
+        $this->dump(date('y'));
     }
 
 }

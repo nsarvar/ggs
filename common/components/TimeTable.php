@@ -46,4 +46,8 @@ class TimeTable
             6 => Yii::t('main','Shanba')];
     }
 
+    public static function hasDay($day) {
+        return array_key_exists($day,TimeTable::getDays());
+    }
+
 }

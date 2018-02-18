@@ -38,7 +38,14 @@ $this->params['breadcrumbs'][] = $this->title;
             'fname',
             'lname',
             'bdate',
-            //'email:email',
+            [
+                'attribute' => 'gender',
+                'filter' => [0 => Yii::t('main','Ayol'), 1 => Yii::t('main','Erkak')],
+                'content' => function($data) {
+                    return $data->genderName;
+                }
+            ],
+//            'email:email',
             'passport',
             'address:ntext',
             //'phone',

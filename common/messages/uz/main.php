@@ -195,4 +195,5 @@ return [
     'Faculty Name' => 'O\'qituvchisi',
     'Course Enroll' => 'Kursga yozilish',
     'Full Name' => 'To\'liq ism',
+    'Gender' => 'Jins'
 ];

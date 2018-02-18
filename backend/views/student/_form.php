@@ -51,6 +51,8 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'phone')->textInput(['maxlength' => true]) ?>
 
+    <?= $form->field($model,'gender')->radioList([1 => Yii::t('main','Erkak'), 0 => Yii::t('main','Ayol')])?>
+
     <div class="form-group">
         <?= Html::submitButton(Yii::t('main', 'Save'), ['class' => 'btn btn-success']) ?>
     </div>

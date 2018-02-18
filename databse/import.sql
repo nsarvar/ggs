@@ -36,3 +36,5 @@ ALTER TABLE `subject_category`
   ADD CONSTRAINT `subject_category_ibfk_1` FOREIGN KEY (`subject_id`) REFERENCES `subject` (`id`),
   ADD CONSTRAINT `subject_category_ibfk_2` FOREIGN KEY (`category_id`) REFERENCES `category` (`id`);
 COMMIT;
+
+ALTER TABLE  `student` ADD  `gender` BOOLEAN NOT NULL AFTER  `avatar` ;

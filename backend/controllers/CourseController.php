@@ -333,7 +333,7 @@ class CourseController extends Controller
                 elseif($model->save())
                     Yii::$app->session->addFlash('success', Yii::t('main','Ma\'lumot qo\'shildi'));
                 else
-                    Yii::$app->session->addFlash('success', Yii::t('main','Ma\'lumot qo\'shishda xatolik!'));
+                    Yii::$app->session->addFlash('danger', Yii::t('main','Ma\'lumot qo\'shishda xatolik!'));
             }
             return $this->referrer();
         }
