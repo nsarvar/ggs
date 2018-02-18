@@ -36,4 +36,14 @@ class TimeTable
         ];
     }
 
+    public static function getDays() {
+        return [
+            1 => Yii::t('main','Dushanba'),
+            2 => Yii::t('main','Seshanba'),
+            3 => Yii::t('main','Chorshanba'),
+            4 => Yii::t('main','Payshanba'),
+            5 => Yii::t('main','Juma'),
+            6 => Yii::t('main','Shanba')];
+    }
+
 }

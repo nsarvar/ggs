@@ -143,3 +143,6 @@ a.desc:after {
     color: green;
     font-style: italic;
 }
+.color-danger {
+    color: #dd4b39;
+}

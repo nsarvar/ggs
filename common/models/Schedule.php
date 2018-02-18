@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use common\components\TimeTable;
 use Yii;
 
 /**
@@ -59,5 +60,28 @@ class Schedule extends \yii\db\ActiveRecord
     public function getCourse()
     {
         return $this->hasOne(Course::className(), ['id' => 'course_id']);
+    }
+
+    public function getDayName() {
+        $days = TimeTable::getDays();
+        if(empty($days[$this->day]))
+            return Yii::t('main','topilmadi');
+        return $days[$this->day];
+    }
+
+    public function getStartTime() {
+        return $this->asMyFormat($this->start_time);
+    }
+
+    public function getEndTime() {
+        return $this->asMyFormat($this->end_time);
+    }
+
+    public function asMyFormat($time) {
+        return date('H:i',strtotime($time));
+    }
+
+    public function getValidDate() {
+        return strtotime($this->end_time) - strtotime($this->start_time) > 0;
     }
 }

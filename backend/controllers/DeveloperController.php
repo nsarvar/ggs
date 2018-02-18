@@ -11,7 +11,9 @@ namespace backend\controllers;
 use backend\components\Controller;
 use common\models\AuthAssignment;
 use common\models\AuthItem;
+use common\models\Course;
 use common\models\CourseEnroll;
+use common\models\Schedule;
 use common\models\Subject;
 use common\models\SubjectCategory;
 use common\models\User;
@@ -73,7 +75,10 @@ class DeveloperController extends Controller
     }
 
     public function actionTest() {
-        $this->dump(CourseEnroll::getByCourse(4));
+        $model = Schedule::findOne(1);
+        print_r(strtotime($model->end_time).'<br>');
+        print_r(strtotime($model->start_time).'<br>');
+        $this->dump($model->getValidDate());
     }
 
 }

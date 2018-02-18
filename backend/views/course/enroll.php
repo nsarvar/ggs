@@ -49,15 +49,35 @@ $this->title = $course->title;
                 ],
                 'bdate',
                 [
-                    'filter' => Html::checkbox('enroll-all',false,['id' => 'enroll-all']),
-                    'content' => function($data) {
-                        return Html::checkbox('enroll['.$data->id.']',false,['data-type' => 'check', 'class' => 'enroll-check']);
+                    'class' => 'yii\grid\CheckboxColumn',
+                    'checkboxOptions' => function($model) {
+                        return [
+                                'value' => $model->id,
+                            ];
                     },
-                    'options' => ['class' => 'text-center']
+                    'name' => 'enroll',
+                    'cssClass' => 'enroll-check'
+                ],
+                [
+                    'class' => 'yii\grid\ActionColumn',
+                    'buttons'=>[
+                        'add'=>function ($url, $model)
+                        {
+                            return Html::a( Yii::t('main','Qo\'shish'), '',
+                                [
+                                    'title' => Yii::t('yii', 'O\'quvchini joriy kursga qo\'shish'),
+                                    'class' => 'add-student btn btn-success',
+                                    'data-id' => $model['id'],
+                                    'onclick' => 'return addStudent($(this));',
+                                ]);
+                        },
+                    ],
+                    'template'=>'{add}',
+
                 ],
             ],
             'tableOptions' => [
-                'class'=>'table table-striped table-bordered text-center-table'
+                'class'=>'table table-striped table-bordered text-center-table text-center-table-last-2'
             ],
         ]); ?>
         <?php Pjax::end()?>
@@ -71,8 +91,7 @@ $this->title = $course->title;
 
                 echo Html::button(Yii::t('main','Kursdan o\'chirish'),[
                     'class' => 'btn btn-danger',
-                    'data-confirm' => Yii::t('main','Haqiqatdan ham ushbu o\'quvchilarni kursdan o\'chirmoqchimisiz?'),
-                    'id' => 'enroll-to-course'
+                    'id' => 'delete-from-course'
 
                 ])
             ?>
@@ -101,21 +120,24 @@ $this->title = $course->title;
                 ],
                 'bdate',
                 [
-                    'filter' => Html::checkbox('enroll-all',false,['id' => 'enroll-all']),
-                    'content' => function($data) {
-                        return Html::checkbox('enrollSt['.$data->id.']',false,['data-type' => 'check', 'class' => 'enroll-check']);
+                    'class' => 'yii\grid\CheckboxColumn',
+                    'checkboxOptions' => function($model) {
+                        return [
+                            'value' => $model->id,
+                        ];
                     },
-                    'options' => ['class' => 'text-center']
+                    'name' => 'enroll',
+                    'cssClass' => 'enroll-check-2'
                 ],
                 [
                     'class' => 'yii\grid\ActionColumn',
                     'buttons'=>[
                         'delete'=>function ($url, $model)
                         {
-                            return Html::a( '<span class="glyphicon glyphicon-remove-circle"></span>', '#',
+                            return Html::a( Yii::t('yii', 'O\'chirish'), '',
                                 [
-                                    'title' => Yii::t('yii', 'Kursda o\'chirish'), 'data-pjax' => '0',
-                                    'class' => 'remove-student',
+                                    'title' => Yii::t('yii', 'O\'quvchini joriy kursdan o\'chirish'),
+                                    'class' => 'remove-student btn btn-danger',
                                     'data-id' => $model['id'],
                                     'onclick' => 'return removeStudent($(this));',
                                 ]);
@@ -137,4 +159,5 @@ $this->title = $course->title;
 
 </div>
 <input type="hidden" value="<?=Yii::t('yii', 'Haqiqatdan ham, ushbu o\'quvchini kursdan o\'chirmoqchimisiz?')?>" id="confirm-message">
-<input type="hidden" value="<?=$course->id?>" id="course">
+<input type="hidden" value="<?=Yii::t('main','Haqiqatdan ham ushbu o\'quvchilarni kursdan o\'chirmoqchimisiz?')?>" id="confirm-message-2">
+<input type="hidden" value="<?=$course->id?>" id="course" name="course">

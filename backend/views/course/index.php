@@ -61,20 +61,20 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'class' => 'yii\grid\ActionColumn',
                 'buttons'=>[
-                    'enroll'=>function ($url, $model) {
-                        $customurl=Yii::$app->getUrlManager()->createUrl(['/course/enroll','id'=>$model['id']]); //$model->id для AR
-                        return Html::a( '<span class="glyphicon glyphicon-paperclip"></span>', $customurl, [
-                                    'title' => Yii::t('yii', 'Kursga yozilish'), 'data-pjax' => '0'
-                                ]);
-                    },
                     'enrollStudents' => function($url, $model) {
-                        $customurl = Yii::$app->getUrlManager()->createUrl(['/course/enroll-student','id' => $model['id']]);
+                        $customurl = Yii::$app->getUrlManager()->createUrl(['/course/enroll','id' => $model['id']]);
                         return Html::a('<span class="glyphicon glyphicon-user"></span>',$customurl,[
                                 'title' => Yii::t('main','Kurs o\'quvchilari'), 'data-pjax' => '0'
                         ]);
+                    },
+                    'time' => function($url, $model) {
+                        $customurl = Yii::$app->getUrlManager()->createUrl(['/course/schedule','id' => $model['id']]);
+                        return Html::a('<span class="glyphicon glyphicon-time"></span>',$customurl,[
+                                'title' => Yii::t('main','Kurs vaqtlari'), 'data-pjax' => '0'
+                        ]);
                     }
                 ],
-                'template'=>'{enrollStudents} {view} {enroll} {update} {delete}',
+                'template'=>'{enrollStudents} {time} {view} {update} {delete}',
             ],
         ],
     ]); ?>

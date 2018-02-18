@@ -27,6 +27,10 @@ class Course extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
+
+    const DAY_LIMIT = 2;
+    const SCHEDULE_LIMIT = 14;
+
     public static function tableName()
     {
         return 'course';
@@ -151,5 +155,21 @@ class Course extends \yii\db\ActiveRecord
         if($this->size != false)
             return $this->size - $this->enrollCount;
         return false;
+    }
+
+    public function getDayCount($id) {
+        return $this->getSchedules()->filterWhere(['day' => $id])->count();
+    }
+
+    public function getHasDayCount($id) {
+        return $this->getDayCount($id) < Course::DAY_LIMIT;
+    }
+
+    public function getScheduleCount() {
+        return $this->getSchedules()->count();
+    }
+
+    public function getHasScheduleCount() {
+        return $this->scheduleCount < Course::SCHEDULE_LIMIT;
     }
 }

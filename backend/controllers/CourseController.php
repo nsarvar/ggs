@@ -4,6 +4,7 @@ namespace backend\controllers;
 
 use common\models\CourseEnroll;
 use common\models\CourseEnrollSearch;
+use common\models\Schedule;
 use common\models\Student;
 use common\models\StudentEnrollSearch;
 use common\models\StudentSearch;
@@ -121,23 +122,6 @@ class CourseController extends Controller
             Yii::$app->session->addFlash('danger', Yii::t('main','Kurs topilmadi!'));
             return $this->referrer();
         }
-        if($post = Yii::$app->request->post()) {
-            if(!empty($post['enroll'])) {
-                $countEnroll = count($post['enroll']);
-                $count = 0;
-                foreach ($post['enroll'] as $key => $value) {
-                    if( $course->diff < 1) {
-                        Yii::$app->session->addFlash('danger',Yii::t('main','{count} ta o\'quvchi kurs to\'lganligi sababli kursga qo\'shilmadi!',['count' => $countEnroll - $count]));
-                        break;
-                    }
-                    if(CourseEnroll::saveModel($id,$key))
-                        $count++;
-                }
-                if($count>0)
-                    Yii::$app->session->addFlash('success',Yii::t('main','{count} ta o\'quvchi kursga qo\'shildi!',['count' => $count]));
-            }
-            return $this->referrer();
-        }
 
         $searchModel = new StudentEnrollSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams,$id);
@@ -156,43 +140,6 @@ class CourseController extends Controller
 
     }
 
-    public function actionEnrollStudent($id) {
-        $course = Course::findOne($id);
-        if(empty($course)) {
-            Yii::$app->session->addFlash('danger', Yii::t('main','Kurs topilmadi!'));
-            return $this->referrer();
-        }
-
-        if($post = Yii::$app->request->post()) {
-            if(!empty($post['enroll'])) {
-                $countSuccess = 0;
-                $countError = 0;
-                foreach ($post['enroll'] as $key => $value) {
-                    if(CourseEnroll::deleteModel($id,$key))
-                        $countSuccess++;
-                    else
-                        $countError++;
-                }
-
-                if($countSuccess > 0)
-                    Yii::$app->session->addFlash('warning', Yii::t('main','{count} ta o\'quvchi kursdan o\'chirildi!',['count' => $countSuccess]));
-                if($countError > 0 )
-                    Yii::$app->session->addFlash('danger',Yii::t('main', '{count} ta o\'quvchini kursdan o\'chirishda xatolik yuz berdi!'));
-
-                return $this->referrer();
-            }
-        }
-
-        Yii::$app->session->set('courseId',$id);
-        $searchModel = new CourseEnrollSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams,$id);
-        return $this->render('enrollStudents',[
-            'course' => $course,
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
-
-    }
 
     public function actionDeleteEnroll() {
         Yii::$app->response->format = Response::FORMAT_JSON;
@@ -218,6 +165,145 @@ class CourseController extends Controller
         ]);
     }
 
+    public function actionAddEnroll() {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        if($post = Yii::$app->request->post()) {
+            $student = $post['student'];
+            $course = $post['course'];
+            $courseModel = Course::findOne($course);
+
+            if(empty($courseModel))
+                return [
+                    'status' => 0,
+                    'message' => Yii::t('main','Kurs topilmadi!')
+                ];
+            if($courseModel->diff < 1)
+                return [
+                    'status' => 0,
+                    'message' => Yii::t('main','Kurs to\'lgan!')
+                ];
+            if(CourseEnroll::saveModel($course,$student)) {
+                return [
+                    'status' => 1,
+                    'message' => Yii::t('main','O\'quvchi kursga qo\'shildi!')
+                ];
+            } else {
+                return [
+                    'status' => 0,
+                    'message' => Yii::t('main','Qo\'shishda xatolik!')
+                ];
+            }
+        }
+        return json_encode([
+            'status' => 0,
+            'message' => Yii::t('main','Ruxsat berilmagan!')
+        ]);
+    }
+
+    public function actionAddEnrolls() {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        if($post = Yii::$app->request->post()) {
+            $enrolls = $post['enroll'];
+            $course = $post['course'];
+            $courseModel = Course::findOne($course);
+
+            if(empty($courseModel))
+                return [
+                    'status' => 0,
+                    'message' => Yii::t('main','Kurs topilmadi!')
+                ];
+
+            $count = 0;
+            $message = false;
+            $message2 = false;
+            $countEnroll = count($enrolls);
+            foreach ($enrolls as  $value) {
+                if( $courseModel->diff < 1) {
+                    $message2 = Yii::t('main','{count} ta o\'quvchi kurs to\'lganligi sababli kursga qo\'shilmadi!',['count' => $countEnroll - $count]);
+                    break;
+                }
+                if(CourseEnroll::saveModel($course,$value))
+                    $count++;
+            }
+            if($count>0)
+                $message = Yii::t('main','{count} ta o\'quvchi kursga qo\'shildi!',['count' => $count]);
+
+            if($message && $message2)
+                return [
+                    'status' => 2,
+                    'message' => $message,
+                    'message2' => $message2
+                ];
+            if($message)
+                return [
+                'status' => 1,
+                'message' => $message
+            ];
+            if($message2)
+                return [
+                'status' => 0,
+                'message' => $message2
+            ];
+
+            return [
+                'status' => 0,
+                'message' => Yii::t('main','Serverda xatolik')
+            ];
+        }
+        return json_encode([
+            'status' => 0,
+            'message' => Yii::t('main','Ruxsat berilmagan!')
+        ]);
+    }
+
+    public function actionDeleteEnrolls() {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        if($post = Yii::$app->request->post()) {
+            $enrolls = $post['enroll'];
+            $course = $post['course'];
+            $countSuccess = 0;
+            $countError = 0;
+            $message = false;
+            $message2 = false;
+            foreach ($enrolls as  $value) {
+                if(CourseEnroll::deleteModel($course, $value))
+                    $countSuccess++;
+                else
+                    $countError++;
+            }
+            if($countSuccess > 0)
+                $message = Yii::t('main','{count} ta o\'quvchi kursdan o\'chirildi!',['count' => $countSuccess]);
+            if($countError > 0)
+                $message2 = Yii::t('main','{count} ta o\'quvchini kursdan o\'chirishda xatolik yuz berdi!');
+
+            if($message && $message2)
+                return [
+                    'status' => 2,
+                    'message' => $message,
+                    'message2' => $message2
+                ];
+            if($message)
+                return [
+                    'status' => 1,
+                    'message' => $message
+                ];
+            if($message2)
+                return [
+                    'status' => 0,
+                    'message' => $message2
+                ];
+
+            return [
+                'status' => 0,
+                'message' => Yii::t('main','Serverda xatolik')
+            ];
+        }
+        return json_encode([
+            'status' => 0,
+            'message' => Yii::t('main','Ruxsat berilmagan!')
+        ]);
+    }
+
     public function actionDeleteFromEnroll($id, $course) {
 
         if(CourseEnroll::deleteModel($course,$id)) {
@@ -225,6 +311,41 @@ class CourseController extends Controller
         } else {
             Yii::$app->session->addFlash('danger', Yii::t('main','O\'chirishda xatolik!'));
         }
+        return $this->referrer();
+    }
+
+    public function actionSchedule($id) {
+        $course = Course::findOne($id);
+        if(empty($course)) {
+            Yii::$app->session->addFlash('danger', Yii::t('main','Kurs topilmadi!'));
+            return $this->referrer();
+        }
+        $model = new Schedule();
+        if($post = Yii::$app->request->post()) {
+            if(!$course->getHasDayCount($post['Schedule']['day']))
+                Yii::$app->session->addFlash('danger', Yii::t('main','Bir kunga ko\'pi bilan {count} ta vaqt qo\'shish mumkin',['count' => Course::DAY_LIMIT]));
+            elseif(!$course->getHasScheduleCount())
+                Yii::$app->session->addFlash('danger', Yii::t('main','Bitta kursga ko\'pi bilan {count} ta vaqt qo\'shish mumkin',['count' => Course::SCHEDULE_LIMIT]));
+            else {
+                $model->load($post);
+                if(!$model->validDate)
+                    Yii::$app->session->addFlash('danger', Yii::t('main','Noto\'g\'ri vaqt kiritildi!'));
+                elseif($model->save())
+                    Yii::$app->session->addFlash('success', Yii::t('main','Ma\'lumot qo\'shildi'));
+                else
+                    Yii::$app->session->addFlash('success', Yii::t('main','Ma\'lumot qo\'shishda xatolik!'));
+            }
+            return $this->referrer();
+        }
+        return $this->render('schedule',['model' => $model, 'course' => $course]);
+    }
+
+    public function actionDeleteSchedule($id) {
+        $model = Schedule::findOne($id);
+        if($model && $model->delete())
+            Yii::$app->session->addFlash('success', Yii::t('main','Ma\'lumot o\'chdi!'));
+        else
+            Yii::$app->session->addFlash('success', Yii::t('main','Ma\'lumotni o\'chirishda xatolik!'));
         return $this->referrer();
     }
 
