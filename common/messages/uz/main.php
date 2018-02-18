@@ -193,5 +193,6 @@ return [
     'Subject Name' => 'Fan nomi',
     'Cat Name' => 'Kurs kategoriyasi',
     'Faculty Name' => 'O\'qituvchisi',
-    'Course Enroll' => 'Kursga yozilish'
+    'Course Enroll' => 'Kursga yozilish',
+    'Full Name' => 'To\'liq ism'
 ];

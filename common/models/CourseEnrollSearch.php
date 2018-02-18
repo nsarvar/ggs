@@ -15,11 +15,15 @@ class CourseEnrollSearch extends Student
     /**
      * @inheritdoc
      */
+
+    public $fullName;
+
     public function rules()
     {
         return [
             [['id', 'parent_id'], 'integer'],
             [['code', 'fname', 'lname', 'bdate', 'email', 'passport', 'address', 'phone', 'created_at', 'updated_at'], 'safe'],
+            [['fullName'], 'safe']
         ];
     }
 
@@ -49,6 +53,28 @@ class CourseEnrollSearch extends Student
             'query' => $query,
         ]);
 
+        $dataProvider->setSort([
+            'attributes' => [
+                'id',
+                'fullName' => [
+                    'asc' => ['fname' => SORT_ASC, 'lname' => SORT_ASC],
+                    'desc' => ['fname' => SORT_DESC, 'lname' => SORT_DESC],
+                    'label' => 'Full Name',
+                    'default' => SORT_ASC
+                ],
+                'bdate',
+                'email',
+                'passport',
+                'address',
+                'phone',
+                'avatar',
+                'parent_id',
+                'created_at',
+                'updated_at',
+                'avatarImage'
+            ]
+        ]);
+
         $this->load($params);
 
         if (!$this->validate()) {
@@ -68,13 +94,18 @@ class CourseEnrollSearch extends Student
         ]);
 
         $query->andFilterWhere(['like', 'student.code', $this->code])
-            ->andFilterWhere(['like', 'student.fname', $this->fname])
-            ->andFilterWhere(['like', 'student.lname', $this->lname])
+//            ->andFilterWhere(['like', 'student.fname', $this->fname])
+//            ->andFilterWhere(['like', 'student.lname', $this->lname])
             ->andFilterWhere(['like', 'student.email', $this->email])
             ->andFilterWhere(['like', 'student.passport', $this->passport])
 //            ->andFilterWhere(['like', 'address', $this->address])
             ->andFilterWhere(['like', 'student.phone', $this->phone]);
 //            ->andWhere(['course_enroll.course_id' => $course]);
+
+        $query->andWhere('fname LIKE "%' . $this->fullName . '%" ' . //This will filter when only first name is searched.
+            'OR lname LIKE "%' . $this->fullName . '%" '. //This will filter when only last name is searched.
+            'OR CONCAT(lname, " ", fname) LIKE "%' . $this->fullName . '%"' //This will filter when full name is searched.
+        );
 
         return $dataProvider;
     }

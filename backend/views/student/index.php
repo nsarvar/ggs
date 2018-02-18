@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use yii\widgets\Pjax;
 
 /* @var $this yii\web\View */
 /* @var $searchModel common\models\StudentSearch */
@@ -14,6 +15,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+    <?php Pjax::begin(); ?>
 
     <p>
         <?= Html::a(Yii::t('main', 'Create Student'), ['create'], ['class' => 'btn btn-success']) ?>
@@ -62,4 +64,5 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
 
     ]); ?>
+    <?php Pjax::end(); ?>
 </div>

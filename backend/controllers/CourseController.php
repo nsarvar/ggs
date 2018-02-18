@@ -13,6 +13,7 @@ use common\models\CourseSearch;
 use backend\components\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\Response;
 
 /**
  * CourseController implements the CRUD actions for Course model.
@@ -140,11 +141,18 @@ class CourseController extends Controller
 
         $searchModel = new StudentEnrollSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams,$id);
+
+        Yii::$app->session->set('courseId',$id);
+        $searchModel2 = new CourseEnrollSearch();
+        $dataProvider2 = $searchModel2->search(Yii::$app->request->queryParams,$id);
+
         return $this->render('enroll',[
             'course' => $course,
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-        ]);
+            'searchModel2' => $searchModel2,
+            'dataProvider2' => $dataProvider2,
+            ]);
 
     }
 
@@ -184,6 +192,30 @@ class CourseController extends Controller
             'dataProvider' => $dataProvider,
         ]);
 
+    }
+
+    public function actionDeleteEnroll() {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        if($post = Yii::$app->request->post()) {
+            $student = $post['student'];
+            $course = $post['course'];
+
+            if(CourseEnroll::deleteModel($course,$student)) {
+                return [
+                    'status' => 1,
+                    'message' => Yii::t('main','O\'quvchi kursdan o\'chirildi!')
+                ];
+            } else {
+                return [
+                    'status' => 0,
+                    'message' => Yii::t('main','O\'chirishda xatolik!')
+                ];
+            }
+        }
+        return json_encode([
+            'status' => 0,
+            'message' => Yii::t('main','Ruxsat berilmagan!')
+        ]);
     }
 
     public function actionDeleteFromEnroll($id, $course) {

@@ -12,6 +12,7 @@ use common\models\Student;
  */
 class StudentSearch extends Student
 {
+    public $fullName;
     /**
      * @inheritdoc
      */
@@ -20,6 +21,7 @@ class StudentSearch extends Student
         return [
             [['id', 'parent_id'], 'integer'],
             [['code', 'fname', 'lname', 'bdate', 'email', 'passport', 'address', 'phone', 'created_at', 'updated_at'], 'safe'],
+            [['fullName'], 'safe']
         ];
     }
 
@@ -49,6 +51,28 @@ class StudentSearch extends Student
             'query' => $query,
         ]);
 
+        $dataProvider->setSort([
+            'attributes' => [
+                'id',
+                'fullName' => [
+                    'asc' => ['fname' => SORT_ASC, 'lname' => SORT_ASC],
+                    'desc' => ['fname' => SORT_DESC, 'lname' => SORT_DESC],
+                    'label' => 'Full Name',
+                    'default' => SORT_ASC
+                ],
+                'bdate',
+                'email',
+                'passport',
+                'address',
+                'phone',
+                'avatar',
+                'parent_id',
+                'created_at',
+                'updated_at',
+                'avatarImage'
+            ]
+        ]);
+
         $this->load($params);
 
         if (!$this->validate()) {
@@ -73,6 +97,12 @@ class StudentSearch extends Student
             ->andFilterWhere(['like', 'passport', $this->passport])
             ->andFilterWhere(['like', 'address', $this->address])
             ->andFilterWhere(['like', 'phone', $this->phone]);
+
+        $query->andWhere('fname LIKE "%' . $this->fullName . '%" ' . //This will filter when only first name is searched.
+            'OR lname LIKE "%' . $this->fullName . '%" '. //This will filter when only last name is searched.
+            'OR CONCAT(lname, " ", fname) LIKE "%' . $this->fullName . '%"' //This will filter when full name is searched.
+        );
+
 
         return $dataProvider;
     }

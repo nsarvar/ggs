@@ -12,6 +12,7 @@ use backend\components\Controller;
 use common\models\Faculty;
 use common\models\Files;
 use common\models\Student;
+use common\models\Test;
 
 class RandomDataController extends Controller
 {
@@ -209,6 +210,29 @@ class RandomDataController extends Controller
         $streetName = $streets[array_rand($streets)];
         $address = $regionName.', '.$subRegionName.', '.$streetName.' ko\'chasi, '.rand(1,300).'-uy.';
         return $address;
+    }
+
+    public function actionRandomTest() {
+        for ($i=0;$i<100;$i++) {
+            $model = new Test();
+            $model->name = $this->getRandomStr();
+            $model->lname = $this->getRandomStr();
+            $model->save();
+        }
+        print_r("Finish");
+    }
+
+    public function getRandomStr() {
+        $str = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($str);
+        $length = rand(4,10);
+        $randomStr = '';
+        for($j=0;$j<$length;$j++) {
+            $rand = rand(0, $charactersLength - 1);
+            $randomStr .= $str[$rand];
+        }
+        return $randomStr;
+
     }
 
 }
