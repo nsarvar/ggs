@@ -29,7 +29,7 @@ return [
     'Child' => '',
     'Chiqish' => '',
     'Chorshanba' => '',
-    'Code' => '',
+    'Code' => 'Kod',
     'Course Categories' => '',
     'Course Group ID' => 'Guruh turi',
     'Create Auth Item' => '',
