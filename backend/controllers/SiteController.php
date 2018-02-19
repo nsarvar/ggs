@@ -2,7 +2,7 @@
 namespace backend\controllers;
 
 use Yii;
-use yii\web\Controller;
+use backend\components\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use common\models\LoginForm;
@@ -27,6 +27,11 @@ class SiteController extends Controller
                     ],
                     [
                         'actions' => ['logout', 'index'],
+                        'allow' => true,
+                        'roles' => ['canAdmin'],
+                    ],
+                    [
+                        'actions' => ['logout'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],

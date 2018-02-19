@@ -9,7 +9,7 @@ use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use frontend\assets\AppAsset;
 use common\widgets\Alert;
-
+raoul2000\bootswatch\BootswatchAsset::$theme = 'Materia';
 AppAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
